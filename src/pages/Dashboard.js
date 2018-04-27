@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import ChartReveune from './Chart/ChartReveune.js'
+import ChartProducts from './Chart/ChartProducts.js'
+import ChartOrders from './Chart/ChartOrders.js'
 class Dashboard extends Component{
 
 
@@ -21,14 +24,16 @@ class Dashboard extends Component{
 				    </li>
 				  </ul>				
 				  <div className="tab-content">
-				    <div id="7days-reveune" className="container tab-pane active">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				    <div id="7days-reveune" className="container tab-pane active ">
+				      
+                         <ChartReveune className="chart-tab"/>
+				      
 				    </div>
 				    <div id="month-reveune" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				        <ChartReveune/>
 				    </div>
 				    <div id="year-reveune" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				        <ChartReveune/>
 		    		</div>
 		  		  </div>
 		   </div>
@@ -47,13 +52,13 @@ class Dashboard extends Component{
 				  </ul>				
 				  <div className="tab-content">
 				    <div id="7days-oder" className="container tab-pane active">
-				      <canvas id="myChart" width="400" height="300"></canvas>
+				     <ChartOrders/>
 				    </div>
 				    <div id="month-order" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				        <ChartOrders/>
 				    </div>
 				    <div id="year-order" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				         <ChartOrders/>
 		    		</div>
 		  		  </div>
 		   </div>
@@ -72,13 +77,13 @@ class Dashboard extends Component{
 				  </ul>				
 				  <div className="tab-content">
 				    <div id="7days-product" className="container tab-pane active">
-				      <canvas id="myChart" width="400" height="400"></canvas>
+				      <ChartProducts/>
 				    </div>
 				    <div id="month-product" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
-				    </div>
+				      <ChartProducts/>
+				     </div>
 				    <div id="year-product" className="container tab-pane fade">
-				      <canvas id="myChart" width="400" height="320"></canvas>
+				      <ChartProducts/>
 		    		</div>
 		  		  </div>
 		   </div>

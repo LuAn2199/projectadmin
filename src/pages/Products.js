@@ -6,6 +6,7 @@ import {
 import CategoryStore from '../stores/CategoryStore';
 import ProductStore from '../stores/ProductStore';
 import * as ProductAction from '../actions/ProductAction';
+import {orderBy,filter} from 'lodash';
 
 
 class ListProducts extends Component {
@@ -47,15 +48,15 @@ class ListProducts extends Component {
 class ListCategory extends Component{
 	
     render(){
-    	let {listCategory}= this.props
+    	let {listCategory,filterByCategory}= this.props
     	return(  
     
     		         <div className="form-group"> 
-					      <select className="form-control" id="">
-					      <option>Show: All Products</option>
+					      <select className="form-control" id="" onChange={filterByCategory}>
+					      <option value="All">Show: All Products</option>
 						   {listCategory.map((v,i)=>{
 			    	        	return(
-			    	        	 <option key={i}>{v.name}</option>
+			    	        	 <option key={i} value={v.name}>{v.name}</option>
 
 			    	        	 );
 
@@ -80,7 +81,7 @@ class ListBrand extends Component{
 					      <option>Show: All Brand</option>
 						   {listBrand.map((v,i)=>{
 			    	        	return(
-			    	        	 <option key={i} >{v.brand}</option>
+			    	        	 <option key={i}  >{v.brand}</option>
 			    	        	 );
 			    			  })
 			    			}	
@@ -98,9 +99,12 @@ class Products extends Component{
         this.state = {
           listProducts: ProductStore.getAll(),
           listCategory: CategoryStore.getAll(),
-          listBrand: ProductStore.getAll()
+          listBrand: ProductStore.getAll(),
+          filCate:"All"
         }
         this.delProduct = this.delProduct.bind(this)
+        this.sort = this.sort.bind(this)
+        this.filterByCategory = this.filterByCategory.bind(this)
 
     }
      componentWillMount() {
@@ -110,6 +114,7 @@ class Products extends Component{
         })
 
     }
+   
 
     delProduct(e) {
         e.preventDefault();
@@ -119,13 +124,41 @@ class Products extends Component{
 
     }
     sort(e){
-
-    	console.log(e.target.value)
+    	if(e.target.value == "A-Z"){
+      	
+      	this.setState({
+      		listProducts: orderBy(this.state.listProducts,['name'], ['asc'])
+      	});      	
+      	}
+    	if(e.target.value == "Z-A"){
+    		this.setState({
+      		listProducts: orderBy(this.state.listProducts,['name'], ['desc'])
+      	});
+    	}
+    	
+    	
     }
+    filterByCategory(e){
+    	this.setState({
+    		filCate: e.target.value
+    	})
     
+    	
+
+    }
 
 
 	render() {
+		let {listProducts} = this.state
+		if(this.state.filCate=="All"){
+			listProducts = this.state.listProducts
+		}
+		else{
+			listProducts = filter(listProducts,{'category': this.state.filCate})
+			
+		}
+		
+
 		return (
 		
 			<div >  
@@ -143,7 +176,7 @@ class Products extends Component{
 			  	<div className="row ">
 			  	   <div className="col-md-3">
 			  	      <div className="form-group"> 
-					      <select className="form-control" id="sort" onChange={this.sort.bind(this)}>
+					      <select className="form-control"  onChange={this.sort}>
 					       
 					        <option value="A-Z">Sort: A-Z</option>
 					        <option value="Z-A">Sort: Z-A</option>
@@ -152,7 +185,7 @@ class Products extends Component{
 			  	   </div>
 				   <div className="col-md-3">
 			  	      <div className="form-group"> 
-					      <select className="form-control" id="">
+					      <select className="form-control" >
 					        <option>Sort: Date, Newest-Oldest</option>
 					        <option>Sort: Date, Oldest-Newest</option>
 					        
@@ -161,7 +194,7 @@ class Products extends Component{
 				   </div>
 				   <div className="col-md-3">
 			  	      
-					      <ListCategory listCategory={this.state.listCategory}/>      
+					      <ListCategory listCategory={this.state.listCategory} filterByCategory={this.filterByCategory}/>      
 					     		  	
 				   </div>
 				   <div className="col-md-3">
@@ -177,7 +210,7 @@ class Products extends Component{
 			  	    <div className="col-sm-2 col-xs-2"><h6 className="title-list"></h6></div>
 			  		
 			  	</div>
-			  	<ListProducts listProducts={this.state.listProducts} delProduct={this.delProduct}/>
+			  	<ListProducts listProducts={listProducts} delProduct={this.delProduct}/>
 
 			  </div>
 			      

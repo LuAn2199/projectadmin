@@ -12,7 +12,7 @@ class ListCategory extends Component{
     
     		         <div className="form-group"> 
 					      <select className="form-control" id="" onChange = {handleChangeCategory}>
-						   {listCategory.map((v,i)=>{
+						     {listCategory.map((v,i)=>{
 			    	        	return(
 			    	        	 <option key={i} value={v.name}>{v.name}</option>
 			    	        	 );
@@ -58,7 +58,7 @@ class AddProduct extends Component {
      handleChangeCategory(event) {
 
         this.setState({category: event.target.value});
-        // console.log( event.target.value)
+        
     } 
     handleChangeBrand(event) {
         this.setState({brand: event.target.value});
@@ -73,7 +73,7 @@ class AddProduct extends Component {
 			     <div className="col-md-6">
 					<div className="form-group">
 				      <label htmlFor="usr">Product Category (*):</label>
-				      <ListCategory listCategory={this.state.listCategory} handleChangeCategory={this.state.handleChangeCategory}/>   
+				      <ListCategory listCategory={this.state.listCategory} handleChangeCategory={this.handleChangeCategory}/>   
 				    </div>  
 			     </div>
 			     <div className="col-md-6">
